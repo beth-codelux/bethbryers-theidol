@@ -1,11 +1,17 @@
 <template>
     <div>
-        <div class="form-inline">
-            <div class="form-group mr-sm-2 mb-2">
-                <label for="search" class="sr-only">Search</label>
-                <input type="search" class="form-control" id="search" placeholder="Search..." v-model="search">
+        <modal-create></modal-create>
+        <div class="row">
+            <div class="col-6 form-inline">
+                <div class="form-group mr-sm-2 mb-2">
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="search" class="form-control" id="search" placeholder="Search..." v-model="search">
+                </div>
+                <button type="button" class="btn btn-primary mb-2" @click="getData">Go</button>
             </div>
-            <button type="button" class="btn btn-primary mb-2" @click="getData">Go</button>
+            <div class="col-6">
+                <button type="button" class="btn btn-primary d-block ml-auto" @click="$modal.show('modal-create')">New Contact</button>
+            </div>
         </div>
         <table class="table">
             <thead class="thead-dark">
