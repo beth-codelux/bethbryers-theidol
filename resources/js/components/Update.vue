@@ -1,5 +1,5 @@
 <template>
-    <modal name="modal-create" width="600" height="auto">
+    <modal name="modal-update" width="600" height="auto">
         <div class="p-4 row">
             <div v-if="errors" class="col-12">
                 <div class="alert alert-danger" role="alert">
@@ -10,28 +10,28 @@
                 </div>
             </div>
             <div class="col-12 form-group">
-                <label for="createName">Name</label>
-                <input type="text" class="form-control" id="createName" v-model="formData.name">
+                <label for="updateName">Name</label>
+                <input type="text" class="form-control" id="updateName" v-model="formData.name">
             </div>
             <div class="col-8 form-group">
-                <label for="createAddress">Address</label>
-                <input type="text" class="form-control" id="createAddress" v-model="formData.address">
+                <label for="updateAddress">Address</label>
+                <input type="text" class="form-control" id="updateAddress" v-model="formData.address">
             </div>
             <div class="col-4 form-group">
-                <label for="createPostcode">Postcode</label>
-                <input type="text" class="form-control" id="createPostcode" v-model="formData.postcode">
+                <label for="updatePostcode">Postcode</label>
+                <input type="text" class="form-control" id="updatePostcode" v-model="formData.postcode">
             </div>
             <div class="col-12 form-group">
-                <label for="createTelephone">Telephone</label>
-                <input type="text" class="form-control" id="createTelephone" v-model="formData.telephone">
+                <label for="updateTelephone">Telephone</label>
+                <input type="text" class="form-control" id="updateTelephone" v-model="formData.telephone">
             </div>
             <div class="col-12 form-group">
-                <label for="createEmail">Email</label>
-                <input type="email" class="form-control" id="createEmail" v-model="formData.email">
+                <label for="updateEmail">Email</label>
+                <input type="email" class="form-control" id="updateEmail" v-model="formData.email">
             </div>
             <div class="col-12 form-group">
-                <label for="createDob">Date of Birth</label>
-                <input type="date" class="form-control" id="createDob" v-model="formData.dob">
+                <label for="updateDob">Date of Birth</label>
+                <input type="date" class="form-control" id="updateDob" v-model="formData.dob">
             </div>
             <div class="col-12">
                 <button @click="onSubmit" type="button" class="btn btn-primary">Submit</button>
@@ -56,9 +56,18 @@
                 errors: null
             }
         },
+        props: ['data'],
+        watch: {
+            data: {
+                handler: function(){
+                    this.formData = this.data;
+                },
+                deep: true
+            }
+        },
         methods: {
             onSubmit: function(){
-                axios.post('/api/create', this.formData).then((res)=>{
+                axios.post('/api/update/'+this.data.id, this.formData).then((res)=>{
                     this.$emit('success');
                     this.errors = null;
                     for(let key in this.formData){

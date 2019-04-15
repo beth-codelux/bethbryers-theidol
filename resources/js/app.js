@@ -26,6 +26,7 @@ Vue.use(vmodal);
 
 Vue.component('address-book', require('./components/AddressBook.vue').default);
 Vue.component('modal-create', require('./components/Create.vue').default);
+Vue.component('modal-update', require('./components/Update.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

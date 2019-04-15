@@ -36,7 +36,7 @@ class ContactsController extends Controller
             'dob' => 'required|date|before:today',
         ]);
 
-        Contact::insert([
+        Contact::create([
             'name' => request('name'),
             'address' => request('address'),
             'postcode' => request('postcode'),
@@ -44,6 +44,26 @@ class ContactsController extends Controller
             'email' => request('email'),
             'dob' => request('dob'),
         ]);
+    }
+
+    public function update(Request $request, $id){
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required',
+            'postcode' => 'required',
+            'telephone' => 'required',
+            'email' => 'required|email',
+            'dob' => 'required|date|before:today',
+        ]);
+
+        $contact = Contact::find($id);
+        $contact->name = request('name');
+        $contact->address = request('address');
+        $contact->postcode = request('postcode');
+        $contact->telephone = request('telephone');
+        $contact->email = request('email');
+        $contact->dob = request('dob');
+        $contact->save();
     }
 
     private function search($result, $columns, $searchQuery){

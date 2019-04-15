@@ -1,6 +1,7 @@
 <template>
     <div>
         <modal-create @success="onCreate"></modal-create>
+        <modal-update @success="onUpdate" :data="selectedContact"></modal-update>
         <div class="row">
             <div class="col-6 form-inline">
                 <div class="form-group mr-sm-2 mb-2">
@@ -26,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="contact in contacts">
+                <tr v-for="(contact,index) in contacts" @click="onRowClick(index)">
                     <th scope="row">{{ contact.id }}</th>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.address }}</td>
@@ -46,7 +47,8 @@
         data: function(){
             return {
                 contacts: [],
-                search: ''
+                search: '',
+                selectedContact: null
             }
         },
         mounted() {
@@ -62,8 +64,16 @@
                     this.contacts = res.data;
                 })
             },
+            onRowClick: function(index){
+                this.selectedContact = this.contacts[index];
+                this.$modal.show('modal-update');
+            },
             onCreate: function(){
                 this.$modal.hide('modal-create');
+                this.getData();
+            },
+            onUpdate: function(){
+                this.$modal.hide('modal-update');
                 this.getData();
             }
         }

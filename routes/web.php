@@ -24,4 +24,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 // API
 Route::get('/api/get_all', 'ContactsController@get_all');
 Route::post('/api/create', 'ContactsController@create');
+Route::post('/api/update/{id}', 'ContactsController@update');
 
