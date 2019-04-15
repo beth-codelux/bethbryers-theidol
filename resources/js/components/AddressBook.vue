@@ -1,6 +1,6 @@
 <template>
     <div>
-        <modal-create></modal-create>
+        <modal-create @success="onCreate"></modal-create>
         <div class="row">
             <div class="col-6 form-inline">
                 <div class="form-group mr-sm-2 mb-2">
@@ -61,6 +61,10 @@
                 }).then((res)=>{
                     this.contacts = res.data;
                 })
+            },
+            onCreate: function(){
+                this.$modal.hide('modal-create');
+                this.getData();
             }
         }
     }

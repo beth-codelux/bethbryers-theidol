@@ -26,6 +26,26 @@ class ContactsController extends Controller
         return $result;
     }
 
+    public function create(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required',
+            'postcode' => 'required',
+            'telephone' => 'required',
+            'email' => 'required|email',
+            'dob' => 'required|date|before:today',
+        ]);
+
+        Contact::insert([
+            'name' => request('name'),
+            'address' => request('address'),
+            'postcode' => request('postcode'),
+            'telephone' => request('telephone'),
+            'email' => request('email'),
+            'dob' => request('dob'),
+        ]);
+    }
+
     private function search($result, $columns, $searchQuery){
         foreach($columns as $column){
             $result = $result->orWhere($column, 'LIKE', '%'.$searchQuery.'%');

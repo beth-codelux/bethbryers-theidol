@@ -1829,6 +1829,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this.contacts = res.data;
       });
+    },
+    onCreate: function onCreate() {
+      this.$modal.hide('modal-create');
+      this.getData();
     }
   }
 });
@@ -1844,6 +1848,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1878,11 +1884,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      formData: {
+        name: null,
+        address: null,
+        postcode: null,
+        telephone: null,
+        email: null,
+        dob: null
+      }
+    };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/create', this.formData).then(function (res) {
+        _this.$emit('success');
+
+        for (var key in _this.formData) {
+          _this.formData[key] = null;
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -37190,7 +37219,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("modal-create"),
+      _c("modal-create", { on: { success: _vm.onCreate } }),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-6 form-inline" }, [
@@ -37337,8 +37366,25 @@ var render = function() {
           _c("label", { attrs: { for: "createName" } }, [_vm._v("Name")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.name,
+                expression: "formData.name"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "createName" }
+            attrs: { type: "text", id: "createName" },
+            domProps: { value: _vm.formData.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "name", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37346,8 +37392,25 @@ var render = function() {
           _c("label", { attrs: { for: "createAddress" } }, [_vm._v("Address")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.address,
+                expression: "formData.address"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "createAddress" }
+            attrs: { type: "text", id: "createAddress" },
+            domProps: { value: _vm.formData.address },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "address", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37357,8 +37420,25 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.postcode,
+                expression: "formData.postcode"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "createPostcode" }
+            attrs: { type: "text", id: "createPostcode" },
+            domProps: { value: _vm.formData.postcode },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "postcode", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37368,8 +37448,25 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.telephone,
+                expression: "formData.telephone"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "createTelephone" }
+            attrs: { type: "text", id: "createTelephone" },
+            domProps: { value: _vm.formData.telephone },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "telephone", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37377,8 +37474,25 @@ var render = function() {
           _c("label", { attrs: { for: "createEmail" } }, [_vm._v("Email")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.email,
+                expression: "formData.email"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "email", id: "createEmail" }
+            attrs: { type: "email", id: "createEmail" },
+            domProps: { value: _vm.formData.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "email", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37388,15 +37502,36 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.formData.dob,
+                expression: "formData.dob"
+              }
+            ],
             staticClass: "form-control",
-            attrs: { type: "date", id: "createDob" }
+            attrs: { type: "date", id: "createDob" },
+            domProps: { value: _vm.formData.dob },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.formData, "dob", $event.target.value)
+              }
+            }
           })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-12" }, [
           _c(
             "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: { click: _vm.onSubmit }
+            },
             [_vm._v("Submit")]
           )
         ])
