@@ -1884,6 +1884,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1895,7 +1903,8 @@ __webpack_require__.r(__webpack_exports__);
         telephone: null,
         email: null,
         dob: null
-      }
+      },
+      errors: null
     };
   },
   mounted: function mounted() {},
@@ -1906,9 +1915,13 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/create', this.formData).then(function (res) {
         _this.$emit('success');
 
+        _this.errors = null;
+
         for (var key in _this.formData) {
           _this.formData[key] = null;
         }
+      })["catch"](function (err) {
+        _this.errors = err.response.data.errors;
       });
     }
   }
@@ -37362,6 +37375,27 @@ var render = function() {
     { attrs: { name: "modal-create", width: "600", height: "auto" } },
     [
       _c("div", { staticClass: "p-4 row" }, [
+        _vm.errors
+          ? _c("div", { staticClass: "col-12" }, [
+              _c(
+                "div",
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [
+                  _vm._v(
+                    "\n                There were some errors with your form, please check and try again:\n                "
+                  ),
+                  _c(
+                    "ul",
+                    _vm._l(_vm.errors, function(error) {
+                      return _c("li", [_vm._v(_vm._s(error[0]))])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "col-12 form-group" }, [
           _c("label", { attrs: { for: "createName" } }, [_vm._v("Name")]),
           _vm._v(" "),

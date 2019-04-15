@@ -1,6 +1,14 @@
 <template>
     <modal name="modal-create" width="600" height="auto">
         <div class="p-4 row">
+            <div v-if="errors" class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    There were some errors with your form, please check and try again:
+                    <ul>
+                        <li v-for="error in errors">{{ error[0] }}</li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-12 form-group">
                 <label for="createName">Name</label>
                 <input type="text" class="form-control" id="createName" v-model="formData.name">
@@ -44,7 +52,8 @@
                     telephone: null,
                     email: null,
                     dob: null
-                }
+                },
+                errors: null
             }
         },
         mounted() {
@@ -54,9 +63,12 @@
             onSubmit: function(){
                 axios.post('/api/create', this.formData).then((res)=>{
                     this.$emit('success');
+                    this.errors = null;
                     for(let key in this.formData){
                         this.formData[key] = null;
                     }
+                }).catch((err)=>{
+                    this.errors = err.response.data.errors;
                 })
             }
         }
